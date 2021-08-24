@@ -12,6 +12,7 @@ const serverlessConfiguration: AWS = {
   plugins: [
     "serverless-webpack",
     "serverless-offline",
+    "serverless-dotenv-plugin",
   ],
   provider: {
     name: "aws",
