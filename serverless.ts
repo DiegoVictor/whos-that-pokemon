@@ -1,5 +1,7 @@
 import type { AWS } from "@serverless/typescript";
 
+import recognize from "@functions/recognize";
+
 const serverlessConfiguration: AWS = {
   service: "whos-that-pokemon",
   frameworkVersion: "2",
@@ -26,6 +28,8 @@ const serverlessConfiguration: AWS = {
     },
     lambdaHashingVersion: "20201221",
   },
+  // import the function via paths
+  functions: { recognize },
 };
 
 module.exports = serverlessConfiguration;
