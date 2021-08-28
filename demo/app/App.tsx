@@ -25,6 +25,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.buttons}>
+      </View>
 
       <View style={styles.description}>
         <Text style={styles.text}>
@@ -42,6 +44,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 20,
+  },
+  buttons: {
+    flexDirection: "row",
+    justifyContent: "center",
+    width: "100%",
   },
   description: {
     alignItems: "center",
