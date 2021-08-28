@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Camera } from "expo-camera";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 export default function App() {
   const [hasPermission, setHasPermission] = useState(false);
   useEffect(() => {
@@ -9,11 +9,20 @@ export default function App() {
     })();
   }, []);
 
+
   if (!hasPermission) {
     return (
+      <View style={styles.container}>
+        <MaterialCommunityIcons
+          name="camera-off"
+          size={60}
+          color="rgba(0, 0, 0, 0.7)"
+        />
         <Text>No access to camera!</Text>
+      </View>
     );
   }
+
   return (
     <View style={styles.container}>
     </View>
