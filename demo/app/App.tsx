@@ -25,6 +25,12 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+
+      <View style={styles.description}>
+        <Text style={styles.text}>
+          Take a picture, then send to recognition or cancel and try again
+        </Text>
+      </View>
     </View>
   );
 }
@@ -36,5 +42,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 20,
+  },
+  description: {
+    alignItems: "center",
+    marginTop: 35,
+    width: "100%",
+  },
+  text: {
+    textAlign: "center",
+    width: 180,
   },
 });
