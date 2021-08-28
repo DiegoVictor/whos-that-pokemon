@@ -1,4 +1,9 @@
 import React, { useEffect, useState } from "react";
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  View,
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 export default function App() {
   const [hasPermission, setHasPermission] = useState(false);
