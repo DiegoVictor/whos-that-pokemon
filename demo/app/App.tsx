@@ -25,6 +25,13 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.frame}>
+          <Camera
+            style={styles.camera}
+            type={Camera.Constants.Type.back}
+            ratio="1:1"
+          />
+      </View>
       <View style={styles.buttons}>
       </View>
 
@@ -44,6 +51,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 20,
+  },
+  camera: {
+    height: size,
+    width: size,
   },
   buttons: {
     flexDirection: "row",
