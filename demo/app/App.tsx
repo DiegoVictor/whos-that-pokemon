@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Dimensions,
+  Image,
   StyleSheet,
   Text,
   View,
@@ -8,6 +9,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 export default function App() {
   const [hasPermission, setHasPermission] = useState(false);
   const [camera, setCamera] = useState<Camera | null>(null);
+  const [photo, setPhoto] = useState<CameraCapturedPicture | null>();
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
@@ -32,6 +34,9 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.frame}>
+        {photo ? (
+          <Image source={{ uri: photo.uri }} style={styles.image} />
+        ) : (
           <Camera
             style={styles.camera}
             type={Camera.Constants.Type.back}
@@ -40,6 +45,7 @@ export default function App() {
               setCamera(r);
             }}
           />
+        )}
       </View>
       <View style={styles.buttons}>
       </View>
@@ -69,6 +75,10 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   camera: {
+    height: size,
+    width: size,
+  },
+  image: {
     height: size,
     width: size,
   },
