@@ -49,6 +49,7 @@ export default function App() {
   );
 }
 
+const size = Dimensions.get("screen").width - 40;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
