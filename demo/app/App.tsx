@@ -52,6 +52,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 20,
   },
+  frame: {
+    backgroundColor: "#000",
+    borderRadius: 8,
+    marginBottom: 15,
+    overflow: "hidden",
+  },
   camera: {
     height: size,
     width: size,
