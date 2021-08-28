@@ -5,17 +5,14 @@ import recognize from "@functions/recognize";
 const serverlessConfiguration: AWS = {
   service: "whos-that-pokemon",
   frameworkVersion: "2",
+  useDotenv: true,
   custom: {
     webpack: {
       webpackConfig: "./webpack.config.js",
       includeModules: true,
     },
   },
-  plugins: [
-    "serverless-webpack",
-    "serverless-offline",
-    "serverless-dotenv-plugin",
-  ],
+  plugins: ["serverless-webpack", "serverless-offline"],
   provider: {
     name: "aws",
     runtime: "nodejs14.x",
