@@ -7,6 +7,7 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 export default function App() {
   const [hasPermission, setHasPermission] = useState(false);
+  const [camera, setCamera] = useState<Camera | null>(null);
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
@@ -35,6 +36,9 @@ export default function App() {
             style={styles.camera}
             type={Camera.Constants.Type.back}
             ratio="1:1"
+            ref={async (r) => {
+              setCamera(r);
+            }}
           />
       </View>
       <View style={styles.buttons}>
