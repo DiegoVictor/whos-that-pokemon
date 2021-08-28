@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   View,
+} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 export default function App() {
   const [hasPermission, setHasPermission] = useState(false);
