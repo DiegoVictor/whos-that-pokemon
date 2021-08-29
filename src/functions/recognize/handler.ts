@@ -44,14 +44,14 @@ const main: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (
     };
   }
 
-  const [{ Name: pokemonName }] = labels.CustomLabels;
+  const [{ Name: pokemon_name }] = labels.CustomLabels;
 
   await s3.deleteObject({ Bucket, Key });
 
   return {
     statusCode: 200,
     body: JSON.stringify({
-      pokemonName,
+      pokemon_name,
     }),
   };
 };
