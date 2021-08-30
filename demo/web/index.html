@@ -99,9 +99,14 @@
     input.value = '';
 
     const pokemon = document.getElementById('pokemon');
+    const show = document.getElementById('show-pokemon');
     const image = new Image();
     pokemon.appendChild(image);
 
+    function showPokemon(pokemonName) {
+      input.value = pokemonName;
+      image.style.filter = 'none';
+    }
 
     let loading = false;
     function chooseRandomPokemon() {
@@ -126,6 +131,12 @@
                 loading = false;
               });
 
+              const pokemonName = pokemon.name;
+
+              show.addEventListener('mouseup', function () {
+                showPokemon(pokemonName);
+                input.blur();
+              });
             });
           }
         });
