@@ -111,6 +111,12 @@
       image.style.filter = 'none';
     }
 
+    function stopGuessing(value, pokemonName) {
+      if (value === pokemonName) {
+        image.style.filter = 'none';
+      }
+    }
+
     let loading = false;
     function chooseRandomPokemon() {
       if (!loading) {
@@ -138,6 +144,11 @@
 
               show.addEventListener('mouseup', function () {
                 showPokemon(pokemonName);
+                input.blur();
+              });
+
+              input.addEventListener('keyup', function () {
+                stopGuessing(event.target.value, pokemonName);
                 input.blur();
               });
             });
