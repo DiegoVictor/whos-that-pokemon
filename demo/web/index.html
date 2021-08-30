@@ -121,8 +121,12 @@
               image.src = pokemon.sprites.other['official-artwork'].front_default;
               image.style.filter = 'contrast(0) brightness(0)';
 
-            });
+              image.addEventListener('load', function () {
+                guess.classList.remove('hidden');
+                loading = false;
+              });
 
+            });
           }
         });
       }
