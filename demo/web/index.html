@@ -93,3 +93,36 @@
 
     </div>
   </div>
+
+  <script>
+    const pokemon = document.getElementById('pokemon');
+    const image = new Image();
+    pokemon.appendChild(image);
+
+
+    let loading = false;
+    function chooseRandomPokemon() {
+      if (!loading) {
+        const randomPokemonId = Date.now() % 151 + 1;
+
+        loading = true;
+  
+        fetch('https://pokeapi.co/api/v2/pokemon/' + randomPokemonId, {
+          method: 'GET',
+          mode: 'cors',
+        })
+        .then(function (response) {
+          if (response && response.ok) {
+            response.json()
+            .then(function (pokemon) {
+              image.src = pokemon.sprites.other['official-artwork'].front_default;
+              image.style.filter = 'contrast(0) brightness(0)';
+
+            });
+
+          }
+        });
+      }
+    }
+
+    chooseRandomPokemon();
