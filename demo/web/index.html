@@ -100,6 +100,7 @@
 
     const pokemon = document.getElementById('pokemon');
     const show = document.getElementById('show-pokemon');
+    const refresh = document.getElementById('refresh-pokemon');
     const image = new Image();
     pokemon.appendChild(image);
 
@@ -144,3 +145,10 @@
     }
 
     chooseRandomPokemon();
+    refresh.addEventListener('mouseup', function() {
+      input.value = '';
+      chooseRandomPokemon();
+    })
+  </script>
+</body>
+</html>
