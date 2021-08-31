@@ -4,6 +4,7 @@ import {
   Image,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { Camera, CameraCapturedPicture } from "expo-camera";
@@ -50,6 +51,13 @@ export default function App() {
         )}
       </View>
       <View style={styles.buttons}>
+          <TouchableOpacity onPress={capture} style={styles.button}>
+              <FontAwesome5
+                name="camera-retro"
+                size={24}
+                color="rgba(0, 0, 0, 0.7)"
+              />
+          </TouchableOpacity>
       </View>
 
       <View style={styles.description}>
@@ -88,6 +96,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     width: "100%",
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.07)",
+    borderRadius: 25,
+    justifyContent: "center",
+    marginHorizontal: 7,
+    width: 50,
+    height: 50,
   },
   description: {
     alignItems: "center",
