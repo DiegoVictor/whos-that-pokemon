@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { Camera, CameraCapturedPicture } from "expo-camera";
 import { useCallback } from "react";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 export default function App() {
