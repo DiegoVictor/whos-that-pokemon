@@ -8,11 +8,13 @@ import {
   View,
 } from "react-native";
 import { Camera, CameraCapturedPicture } from "expo-camera";
+import { useCallback } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 export default function App() {
   const [hasPermission, setHasPermission] = useState(false);
   const [camera, setCamera] = useState<Camera | null>(null);
   const [photo, setPhoto] = useState<CameraCapturedPicture | null>();
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
@@ -20,6 +22,21 @@ export default function App() {
     })();
   }, []);
 
+  const capture = useCallback(async () => {
+    if (camera && !loading) {
+      setLoading(true);
+
+      await camera
+        .takePictureAsync({
+          quality: 1,
+          base64: true,
+        })
+        .then((data) => {
+          setPhoto(data);
+          setLoading(false);
+        });
+    }
+  }, [camera, loading]);
 
   if (!hasPermission) {
     return (
