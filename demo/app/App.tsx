@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
+  Animated,
   Dimensions,
+  Easing,
   Image,
   StyleSheet,
   Text,
@@ -10,11 +12,28 @@ import {
 import { Camera, CameraCapturedPicture } from "expo-camera";
 import { useCallback } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 export default function App() {
   const [hasPermission, setHasPermission] = useState(false);
   const [camera, setCamera] = useState<Camera | null>(null);
   const [photo, setPhoto] = useState<CameraCapturedPicture | null>();
   const [loading, setLoading] = useState(false);
+
+  const spinValue = new Animated.Value(0);
+
+  Animated.loop(
+    Animated.timing(spinValue, {
+      toValue: 1,
+      duration: 1500,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    })
+  ).start();
+
+  const spin = spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["0deg", "360deg"],
+  });
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
@@ -37,6 +56,12 @@ export default function App() {
         });
     }
   }, [camera, loading]);
+
+  const Loading = () => (
+    <Animated.View style={{ transform: [{ rotate: spin }] }}>
+      <AntDesign name="loading1" size={24} color="black" />
+    </Animated.View>
+  );
 
   if (!hasPermission) {
     return (
