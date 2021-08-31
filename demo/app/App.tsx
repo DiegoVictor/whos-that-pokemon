@@ -35,6 +35,7 @@ export default function App() {
     inputRange: [0, 1],
     outputRange: ["0deg", "360deg"],
   });
+
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
@@ -95,11 +96,15 @@ export default function App() {
       </View>
       <View style={styles.buttons}>
           <TouchableOpacity onPress={capture} style={styles.button}>
+            {loading ? (
+              <Loading />
+            ) : (
               <FontAwesome5
                 name="camera-retro"
                 size={24}
                 color="rgba(0, 0, 0, 0.7)"
               />
+            )}
           </TouchableOpacity>
       </View>
 
