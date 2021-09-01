@@ -97,6 +97,11 @@ export default function App() {
       <View style={styles.buttons}>
         {photo ? (
           <>
+            <TouchableOpacity
+              onPress={cancel}
+              style={[styles.button, styles.cancel]}
+            >
+            </TouchableOpacity>
           </>
         ) : (
           <TouchableOpacity onPress={capture} style={styles.button}>
@@ -158,6 +163,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 7,
     width: 50,
     height: 50,
+  },
+  cancel: {
+    backgroundColor: "rgba(235, 70, 70, 0.07)",
   },
   description: {
     alignItems: "center",
