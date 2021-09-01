@@ -95,6 +95,10 @@ export default function App() {
         )}
       </View>
       <View style={styles.buttons}>
+        {photo ? (
+          <>
+          </>
+        ) : (
           <TouchableOpacity onPress={capture} style={styles.button}>
             {loading ? (
               <Loading />
@@ -106,6 +110,7 @@ export default function App() {
               />
             )}
           </TouchableOpacity>
+        )}
       </View>
 
       <View style={styles.description}>
