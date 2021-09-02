@@ -5,12 +5,7 @@ const { save } = require("node-css-image");
 const sizeOf = require("image-size");
 const sharp = require("sharp");
 
-const [, , limit = 3] = process.argv;
-
-if (!limit || isNaN(parseInt(limit, 10))) {
-  throw new Error("Invalid limit parameter, it must be a integer!");
-}
-
+const limit = 151;
 const url = "https://pokeapi.co/api/v2/pokemon/";
 
 const poll = [];
