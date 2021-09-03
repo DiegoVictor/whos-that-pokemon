@@ -99,12 +99,12 @@ function push() {
             });
           });
         }).end();
-      }).then(run)
+      })
     );
     id++;
   }
 
-  return poll;
+  return Promise.all(poll);
 }
 
 async function run() {
@@ -114,6 +114,12 @@ async function run() {
   return poll;
 }
 
-run().then(() => {
-  console.log("Finished");
+run().then((results) => {
+  Promise.all(results.map((promise) => Promise.resolve(promise)))
+    .then((labels) =>
+      fs.promises.writeFile(
+        `${__dirname}/labels.json`,
+        JSON.stringify(labels, null, 2)
+      )
+    )
 });
