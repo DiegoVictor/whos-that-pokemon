@@ -114,6 +114,7 @@
     function stopGuessing(value, pokemonName) {
       if (value === pokemonName) {
         image.style.filter = 'none';
+        input.blur();
       }
     }
 
@@ -149,7 +150,6 @@
 
               input.addEventListener('keyup', function () {
                 stopGuessing(event.target.value, pokemonName);
-                input.blur();
               });
             });
           }
