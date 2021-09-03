@@ -41,7 +41,6 @@ async function saveGreyedOutImage(ext, name, imagePath) {
   if (ext === ".svg") {
     const convertedImagePath = `${__dirname}/images/${name}.png`;
     return sharp(imagePath)
-      .png()
       .toFile(convertedImagePath)
       .then(() =>
         applyFilters(
@@ -79,9 +78,13 @@ function push() {
                 return new Promise((done) => {
                   request(new URL(other[key].front_default), (image) => {
                     image.on("end", () => {
-                      saveGreyedOutImage(ext, `${name}-${key}`, imagePath).then(
-                        done
-                      );
+                      setTimeout(() => {
+                        saveGreyedOutImage(
+                          ext,
+                          `${name}-${key}`,
+                          imagePath
+                        ).then(done);
+                      }, 1);
                     });
                     image.pipe(writeStream);
                   }).end();
