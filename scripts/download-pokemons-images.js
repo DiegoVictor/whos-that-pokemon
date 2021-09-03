@@ -101,8 +101,7 @@ function pushToPoll() {
 }
 
 async function run() {
-  if (completed === 0 || completed < poll.length) {
-    return Promise.all(pushToPoll()).then(run);
+  if (completed === 0 || completed < poll.length || completed < limit) {
   }
   return poll;
 }
