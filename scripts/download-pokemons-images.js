@@ -58,7 +58,7 @@ async function saveGreyedOutImage(ext, name, imagePath) {
   }
 }
 
-function pushToPoll() {
+function push() {
   while (poll.length - completed < 3 && id <= limit) {
     poll.push(
       new Promise((resolve) => {
@@ -102,6 +102,7 @@ function pushToPoll() {
 
 async function run() {
   if (completed === 0 || completed < poll.length || completed < limit) {
+    return push().then(run);
   }
   return poll;
 }
