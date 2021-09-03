@@ -65,6 +65,7 @@ function push() {
         request(new URL(`${url}${id}`), (response) => {
           getJSONFrom(response, (json) => {
             const {
+              id: number,
               name,
               sprites: { other },
             } = json;
@@ -88,7 +89,9 @@ function push() {
               })
             ).then(() => {
               completed++;
-              resolve(true);
+              console.log(
+                `(${completed}/${limit}) #${number} ${name} processed`
+              );
             });
           });
         }).end();
