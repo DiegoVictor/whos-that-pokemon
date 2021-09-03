@@ -92,6 +92,7 @@ function push() {
               console.log(
                 `(${completed}/${limit}) #${number} ${name} processed`
               );
+              resolve(name);
             });
           });
         }).end();
