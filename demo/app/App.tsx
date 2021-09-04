@@ -102,12 +102,15 @@ export default function App() {
       })
         .then((response) => response.json())
         .then((json) => {
+        .catch(() => {
+          Alert.alert("Ops! Something goes wrong, try again later!");
         })
         .finally(() => {
           setLoading(false);
         });
     }
   }, [photo, loading]);
+
   const Loading = () => (
     <Animated.View style={{ transform: [{ rotate: spin }] }}>
       <AntDesign name="loading1" size={24} color="black" />
