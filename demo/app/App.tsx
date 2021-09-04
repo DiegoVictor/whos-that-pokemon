@@ -16,6 +16,8 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import Constants from "expo-constants";
+
 export default function App() {
   const [hasPermission, setHasPermission] = useState(false);
   const [camera, setCamera] = useState<Camera | null>(null);
@@ -86,6 +88,24 @@ export default function App() {
           return;
         }
       }
+
+      const url = Constants.manifest?.extra?.recognition_url;
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          data: photo?.base64,
+        }),
+      })
+        .then((response) => response.json())
+        .then((json) => {
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   }, [photo, loading]);
   const Loading = () => (
