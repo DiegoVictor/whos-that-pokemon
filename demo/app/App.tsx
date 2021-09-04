@@ -102,6 +102,23 @@ export default function App() {
       })
         .then((response) => response.json())
         .then((json) => {
+          const { pokemon_name } = json;
+          if (pokemon_name) {
+          } else {
+            Alert.alert(
+              "Ops",
+              "We were not able to recognize a pokemon in the photo, be sure to take a good photo of him!",
+              [
+                {
+                  onPress: () => {
+                    setPhoto(null);
+                  },
+                  style: "default",
+                },
+              ]
+            );
+          }
+        })
         .catch(() => {
           Alert.alert("Ops! Something goes wrong, try again later!");
         })
