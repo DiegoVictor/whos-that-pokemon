@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Alert,
   Animated,
   Dimensions,
   Easing,
@@ -72,6 +73,19 @@ export default function App() {
       let name = Date.now().toString();
       const fileName = photo.uri.match(/[a-zA-Z0-9-]+\.\w+$/gi);
 
+      if (Array.isArray(fileName) && fileName.length > 0) {
+        [name] = fileName;
+      } else {
+        const extension = photo.uri.match(/\.\w+$/gi);
+        if (Array.isArray(extension) && extension.length > 0) {
+          name += extension;
+        } else {
+          setLoading(false);
+          Alert.alert("Could not identiify the photo format!");
+
+          return;
+        }
+      }
     }
   }, [photo, loading]);
   const Loading = () => (
