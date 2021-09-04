@@ -109,6 +109,15 @@ export default function App() {
               <Ionicons name="close" size={24} color="rgba(235, 70, 70, 0.7)" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={recognize}>
+              {loading ? (
+                <Loading />
+              ) : (
+                <MaterialCommunityIcons
+                  name="face-recognition"
+                  size={24}
+                  color="rgba(0, 0, 0, 0.7)"
+                />
+              )}
             </TouchableOpacity>
           </>
         ) : (
