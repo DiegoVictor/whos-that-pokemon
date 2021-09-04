@@ -104,6 +104,14 @@ export default function App() {
         .then((json) => {
           const { pokemon_name } = json;
           if (pokemon_name) {
+            Alert.alert("Who's that pokemon?", `It's ${pokemon_name}`, [
+              {
+                onPress: () => {
+                  setPhoto(null);
+                },
+                style: "default",
+              },
+            ]);
           } else {
             Alert.alert(
               "Ops",
