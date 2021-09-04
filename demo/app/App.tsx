@@ -12,6 +12,7 @@ import {
 import { Camera, CameraCapturedPicture } from "expo-camera";
 import { useCallback } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 export default function App() {
@@ -105,6 +106,7 @@ export default function App() {
               onPress={cancel}
               style={[styles.button, styles.cancel]}
             >
+              <Ionicons name="close" size={24} color="rgba(235, 70, 70, 0.7)" />
             </TouchableOpacity>
           </>
         ) : (
