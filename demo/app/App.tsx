@@ -64,6 +64,16 @@ export default function App() {
     setPhoto(null);
     setLoading(false);
   }, []);
+
+  const recognize = useCallback(() => {
+    if (photo && photo.uri && photo.base64 && !loading) {
+      setLoading(true);
+
+      let name = Date.now().toString();
+      const fileName = photo.uri.match(/[a-zA-Z0-9-]+\.\w+$/gi);
+
+    }
+  }, [photo, loading]);
   const Loading = () => (
     <Animated.View style={{ transform: [{ rotate: spin }] }}>
       <AntDesign name="loading1" size={24} color="black" />
