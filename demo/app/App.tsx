@@ -59,6 +59,10 @@ export default function App() {
     }
   }, [camera, loading]);
 
+  const cancel = useCallback(() => {
+    setPhoto(null);
+    setLoading(false);
+  }, []);
   const Loading = () => (
     <Animated.View style={{ transform: [{ rotate: spin }] }}>
       <AntDesign name="loading1" size={24} color="black" />
