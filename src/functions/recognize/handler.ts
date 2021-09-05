@@ -2,7 +2,6 @@ import "source-map-support/register";
 import { S3 } from "@aws-sdk/client-s3";
 import { Rekognition } from "@aws-sdk/client-rekognition";
 import { randomUUID } from "crypto";
-import * as path from "path";
 
 import schema from "./schema";
 import { ValidatedEventAPIGatewayProxyEvent } from "@libs/apiGateway";
@@ -13,14 +12,26 @@ const main: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (
 ) => {
   const s3 = new S3({});
 
+  const [metadata, data] = event.body.data.split(",");
+  const [mimeType] = metadata.match(/image\/\w+/);
+
+  if (!mimeType) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: "Was not possible to identify image type",
+      }),
+    };
+  }
+
   const uuid = randomUUID();
-  const Key = `${uuid}${path.extname(event.body.name)}`;
+  const Key = `${uuid}.${mimeType.split("/").pop()}`;
 
   const Bucket = process.env.BUCKET_NAME;
   await s3.putObject({
     Bucket,
     Key,
-    Body: Buffer.from(event.body.data, "base64"),
+    Body: Buffer.from(data, "base64"),
   });
 
   const rekognition = new Rekognition({});
