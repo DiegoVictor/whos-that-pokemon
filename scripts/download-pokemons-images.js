@@ -12,8 +12,6 @@ const poll = [];
 let completed = 0;
 let id = 1;
 
-console.time("Pipeline took");
-
 async function applyFilters(src, output) {
   const dimensions = sizeOf(src);
   return save({
@@ -115,6 +113,8 @@ async function run() {
   }
   return poll;
 }
+
+console.time("Pipeline took");
 
 run().then((results) => {
   Promise.all(results.map((promise) => Promise.resolve(promise)))
