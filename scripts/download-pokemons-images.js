@@ -12,6 +12,7 @@ const poll = [];
 let completed = 0;
 let id = 1;
 
+const applyFilters = async (src, output) => {
 async function applyFilters(src, output) {
   const dimensions = sizeOf(src);
   return save({
@@ -24,7 +25,7 @@ async function applyFilters(src, output) {
     },
     output,
   });
-}
+};
 
 async function getJSONFrom(response, callback) {
   let buffer = "";
@@ -37,7 +38,7 @@ async function getJSONFrom(response, callback) {
     });
 }
 
-async function saveGreyedOutImage(ext, name, imagePath) {
+const saveGreyedOutImage = async (ext, name, imagePath) => {
   if (ext === ".svg") {
     const convertedImagePath = `${__dirname}/images/${name}.png`;
     return sharp(imagePath)
@@ -55,9 +56,9 @@ async function saveGreyedOutImage(ext, name, imagePath) {
       `${__dirname}/images/${name}-greyed-out${ext}`
     );
   }
-}
+};
 
-function push() {
+const push = () => {
   while (poll.length - completed < 3 && id <= limit) {
     poll.push(
       new Promise((resolve) => {
@@ -105,14 +106,14 @@ function push() {
   }
 
   return Promise.all(poll);
-}
+};
 
-async function run() {
+const run = async () => {
   if (completed < poll.length || completed < limit) {
     return push().then(run);
   }
   return poll;
-}
+};
 
 console.time("Pipeline took");
 
