@@ -41,6 +41,7 @@ const saveGreyedOutImage = async (ext, name, imagePath) => {
   if (ext === ".svg") {
     const convertedImagePath = `${__dirname}/images/${name}.png`;
     return sharp(imagePath)
+      .png()
       .toFile(convertedImagePath)
       .then(() =>
         applyFilters(
