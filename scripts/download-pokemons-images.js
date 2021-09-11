@@ -12,11 +12,10 @@ const poll = [];
 let completed = 0;
 let id = 1;
 
-const applyFilters = async (src, output) => {
-async function applyFilters(src, output) {
-  const dimensions = sizeOf(src);
+const applyFilters = async (filePath, output) => {
+  const dimensions = sizeOf(filePath);
   return save({
-    src,
+    src: filePath,
     height: dimensions.height,
     width: dimensions.width,
     filters: {
