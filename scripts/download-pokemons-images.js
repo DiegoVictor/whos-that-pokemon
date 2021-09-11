@@ -125,7 +125,5 @@ run().then((results) => {
         JSON.stringify(labels, null, 2)
       )
     )
-    .then(() => {
-      console.timeEnd("Pipeline took");
-    });
+    .then(() => console.timeEnd("Pipeline took"));
 });
