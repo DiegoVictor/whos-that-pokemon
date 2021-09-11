@@ -108,7 +108,7 @@ function push() {
 }
 
 async function run() {
-  if (completed === 0 || completed < poll.length || completed < limit) {
+  if (completed < poll.length || completed < limit) {
     return push().then(run);
   }
   return poll;
