@@ -4,6 +4,7 @@ const path = require("path");
 const { save } = require("node-css-image");
 const sizeOf = require("image-size");
 const sharp = require("sharp");
+const { pipeline } = require("stream/promises");
 
 const limit = 151;
 const url = "https://pokeapi.co/api/v2/pokemon/";
@@ -75,21 +76,15 @@ const push = () => {
               ["dream_world", "official-artwork"].map((key) => {
                 const ext = path.extname(other[key].front_default);
                 const imagePath = `${__dirname}/images/${name}-${key}${ext}`;
-                const writeStream = fs.createWriteStream(imagePath);
 
                 return new Promise((done) => {
-                  request(new URL(other[key].front_default), (image) => {
-                    image.on("end", () => {
-                      setTimeout(() => {
-                        saveGreyedOutImage(
-                          ext,
-                          `${name}-${key}`,
-                          imagePath
-                        ).then(done);
-                      }, 1);
-                    });
-                    image.pipe(writeStream);
-                  }).end();
+                  request(new URL(other[key].front_default), (stream) =>
+                    pipeline(stream, fs.createWriteStream(imagePath)).then(() =>
+                      saveGreyedOutImage(ext, `${name}-${key}`, imagePath).then(
+                        done
+                      )
+                    )
+                  ).end();
                 });
               })
             ).then(() => {
