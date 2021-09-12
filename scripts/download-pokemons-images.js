@@ -6,13 +6,13 @@ const sizeOf = require("image-size");
 const sharp = require("sharp");
 const { pipeline } = require("stream/promises");
 
-const limit = 151;
 const url = "https://pokeapi.co/api/v2/pokemon/";
+const requestsInParallel = 5;
+const limit = 151;
+let processed = 0;
 
-const requestsInParalel = 5;
-const poll = [];
-let completed = 0;
 let id = 1;
+const poll = [];
 
 const applyFilters = async (filePath, output) => {
   const dimensions = sizeOf(filePath);
@@ -61,7 +61,7 @@ const saveGreyedOutImage = async (ext, name, imagePath) => {
 };
 
 const push = () => {
-  while (poll.length - completed < requestsInParalel && id <= limit) {
+  while (poll.length - processed < requestsInParallel && id <= limit) {
     poll.push(
       new Promise((resolve) => {
         request(new URL(`${url}${id}`), (response) => {
@@ -88,9 +88,9 @@ const push = () => {
                 });
               })
             ).then(() => {
-              completed++;
+              processed++;
               console.log(
-                `(${completed}/${limit}) #${number} ${name} processed`
+                `(${processed}/${limit}) #${number} ${name} processed`
               );
               resolve(name);
             });
@@ -105,7 +105,7 @@ const push = () => {
 };
 
 const run = async () => {
-  if (completed < poll.length || completed < limit) {
+  if (processed < poll.length || processed < limit) {
     return push().then(run);
   }
   return poll;
