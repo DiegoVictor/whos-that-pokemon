@@ -8,6 +8,7 @@ const sharp = require("sharp");
 const limit = 151;
 const url = "https://pokeapi.co/api/v2/pokemon/";
 
+const requestsInParalel = 5;
 const poll = [];
 let completed = 0;
 let id = 1;
@@ -59,7 +60,7 @@ const saveGreyedOutImage = async (ext, name, imagePath) => {
 };
 
 const push = () => {
-  while (poll.length - completed < 3 && id <= limit) {
+  while (poll.length - completed < requestsInParalel && id <= limit) {
     poll.push(
       new Promise((resolve) => {
         request(new URL(`${url}${id}`), (response) => {
