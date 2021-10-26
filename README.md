@@ -19,7 +19,7 @@ I always wished to have a pokedex and today my dream comes true!
   * [Demo](#demo)
     * [Web](#web)
     * [App](#app)
-      * [Configure](#configure)
+      * [Configure](#configure-1)
       * [Using](#using)
 
 # Requirements
