@@ -2,9 +2,25 @@
 [![serverless](https://img.shields.io/badge/serverless-2.55.0-FD5750?style=flat-square&logo=serverless)](https://www.serverless.com/)
 [![typescript](https://img.shields.io/badge/typescript-4.3.5-3178c6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![nodemon](https://img.shields.io/badge/nodemon-2.0.12-76d04b?style=flat-square&logo=nodemon)](https://nodemon.io/)
-[![MIT License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://github.com/DiegoVictor/whos-that-pokemon/blob/master/LICENSE)
+[![MIT License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://raw.githubusercontent.com/DiegoVictor/whos-that-pokemon/main/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)<br>
 I always wished to have a pokedex and today my dream comes true!
+
+## Table of Contents
+* [Requirements](#requirements)
+* [Install](#install)
+  * [Configure](#configure)
+    * [Script](#script)
+    * [S3 Bucket](#s3-bucket)
+    * [Rekognition](#rekognition)
+    * [env](#env)
+* [Usage](#usage)
+  * [Endpoint](#endpoint)
+  * [Demo](#demo)
+    * [Web](#web)
+    * [App](#app)
+      * [Configure](#configure)
+      * [Using](#using)
 
 # Requirements
 * Node.js ^14.15.0
@@ -70,7 +86,7 @@ yarn dev:server
 The server has just one endpoint that is responsible to upload the provided image to S3 bucket, send the image to Rekognition's model, delete the image from bucket and finally send the request response with a pokemon name if one was identified or an error message.
 
 ## Endpoint
-After server's started up you will be able to see the endpoint's url and HTTP method:
+After server started up you will be able to see the endpoint's url and HTTP method:
 ```
 POST | http://localhost:3000/dev/recognize
 ```
