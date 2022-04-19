@@ -29,7 +29,7 @@ I always wished to have a pokedex and today my dream comes true!
   * [S3](https://aws.amazon.com/s3/)
   * [Rekognition](https://aws.amazon.com/rekognition/)
   * [Lambda](https://aws.amazon.com/lambda)
-  * [API Gateway](https://aws.amazon.com/pt/api-gateway/)
+  * [API Gateway](https://aws.amazon.com/api-gateway/)
 
 # Install
 ```
