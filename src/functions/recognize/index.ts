@@ -8,11 +8,6 @@ export default {
       http: {
         method: "post",
         path: "recognize",
-        request: {
-          schema: {
-            "application/json": schema,
-          },
-        },
       },
     },
   ],
