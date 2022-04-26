@@ -8,6 +8,7 @@ export default {
       "Fn::GetAtt": ["WhosThatPokemonBucket", "Arn"],
     },
   },
+  name: "WhosThatPokemonRecognize",
   events: [
     {
       http: {
