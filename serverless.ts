@@ -24,9 +24,30 @@ const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
     },
     lambdaHashingVersion: "20201221",
+    iam: {
+      role: {
+        statements: [
+          {
+            Effect: "Allow",
+            Action: ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
+            Resource: {
+              "Fn::GetAtt": ["WhosThatPokemonBucket", "Arn"],
+            },
+          },
+        ],
+      },
+    },
   },
   functions: { WhosThatPokemonRecognize },
   resources: {
+    Resources: {
+      WhosThatPokemonBucket: {
+        Type: "AWS::S3::Bucket",
+        Properties: {
+          BucketName: "whos-that-pokemon-bucket",
+        },
+      },
+    },
   },
 };
 
