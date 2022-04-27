@@ -41,6 +41,12 @@ const serverlessConfiguration: AWS = {
   functions: { WhosThatPokemonRecognize },
   resources: {
     Resources: {
+      WhosThatPokemonRekognitionProject: {
+        Type: "AWS::Rekognition::Project",
+        Properties: {
+          ProjectName: "WhosThatPokemonRekognitionProject",
+        },
+      },
       WhosThatPokemonBucket: {
         Type: "AWS::S3::Bucket",
         Properties: {
