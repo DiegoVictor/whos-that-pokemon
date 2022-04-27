@@ -1,5 +1,4 @@
-import { handlerPath } from "@libs/handlerResolver";
-import schema from "./schema";
+import { handlerPath } from "@utils/handlerResolver";
 
 export default {
   handler: `${handlerPath(__dirname)}/handler.recognize`,
@@ -7,6 +6,7 @@ export default {
     BUCKET_NAME: {
       "Fn::GetAtt": ["WhosThatPokemonBucket", "Arn"],
     },
+    REKOGNITION_PROJECT_VERION_ARN: "",
   },
   name: "WhosThatPokemonRecognize",
   events: [
