@@ -3,10 +3,8 @@ import { handlerPath } from "@utils/handlerResolver";
 export default {
   handler: `${handlerPath(__dirname)}/handler.recognize`,
   environment: {
-    BUCKET_NAME: {
-      "Fn::GetAtt": ["WhosThatPokemonBucket", "Arn"],
-    },
-    REKOGNITION_PROJECT_VERION_ARN: "",
+    PROJECT_VERSION_ARN_SECRET_NAME:
+      "${self:custom.projectVersionArnSecretName}",
   },
   name: "WhosThatPokemonRecognize",
   events: [
