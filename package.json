@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Serverless aws-nodejs-typescript template",
   "main": "serverless.ts",
+  "license": "MIT",
   "scripts": {
     "dev:server": "nodemon --exec \"sls offline\"",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -34,7 +35,5 @@
     "tsconfig-paths-webpack-plugin": "^3.3.0",
     "typescript": "^4.1.3",
     "webpack": "^5.20.2",
-    "webpack-node-externals": "^2.5.2"
-  },
-  "license": "MIT"
+  }
 }
