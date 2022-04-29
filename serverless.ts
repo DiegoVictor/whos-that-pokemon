@@ -4,7 +4,7 @@ import WhosThatPokemonRecognize from "@functions/recognize";
 
 const serverlessConfiguration: AWS = {
   service: "whos-that-pokemon",
-  frameworkVersion: "2",
+  frameworkVersion: "3",
   useDotenv: true,
   custom: {
     webpack: {
@@ -23,7 +23,6 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
     },
-    lambdaHashingVersion: "20201221",
     iam: {
       role: {
         statements: [
