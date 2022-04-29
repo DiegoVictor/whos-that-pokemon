@@ -11,6 +11,10 @@ const serverlessConfiguration: AWS = {
       webpackConfig: "./webpack.config.js",
       includeModules: true,
     },
+    projectName: "${file(./variables.json):projectName}",
+    projectVersionName: "${file(./variables.json):projectVersionName}",
+    projectVersionArnSecretName: "projectVersionArn",
+    bucketName: "${file(./variables.json):bucket}",
   },
   plugins: ["serverless-webpack", "serverless-offline"],
   provider: {
