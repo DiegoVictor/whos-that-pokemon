@@ -19,6 +19,7 @@ const serverlessConfiguration: AWS = {
   plugins: ["serverless-webpack", "serverless-offline"],
   provider: {
     name: "aws",
+    region: "us-east-1",
     runtime: "nodejs14.x",
     apiGateway: {
       minimumCompressionSize: 1024,
@@ -33,8 +34,18 @@ const serverlessConfiguration: AWS = {
           {
             Effect: "Allow",
             Action: ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
+            Resource: "arn:aws:s3:::*",
+          },
+          {
+            Effect: "Allow",
+            Action: ["rekognition:DetectCustomLabels"],
+            Resource: "*",
+          },
+          {
+            Effect: "Allow",
+            Action: ["secretsmanager:GetSecretValue"],
             Resource: {
-              "Fn::GetAtt": ["WhosThatPokemonBucket", "Arn"],
+              Ref: "WhosThatPokemonProjectVersionArnSecret",
             },
           },
         ],
@@ -44,16 +55,24 @@ const serverlessConfiguration: AWS = {
   functions: { WhosThatPokemonRecognize },
   resources: {
     Resources: {
-      WhosThatPokemonRekognitionProject: {
-        Type: "AWS::Rekognition::Project",
-        Properties: {
-          ProjectName: "WhosThatPokemonRekognitionProject",
-        },
-      },
       WhosThatPokemonBucket: {
         Type: "AWS::S3::Bucket",
         Properties: {
-          BucketName: "whos-that-pokemon-bucket",
+          BucketName: "${self:custom.bucketName}",
+        },
+      },
+      WhosThatPokemonProject: {
+        Type: "AWS::Rekognition::Project",
+        Properties: {
+          ProjectName: "${self:custom.projectName}",
+        },
+      },
+      WhosThatPokemonProjectVersionArnSecret: {
+        Type: "AWS::SecretsManager::Secret",
+        Properties: {
+          Description: "Rekognition Project Version Arn",
+          Name: "${self:custom.projectVersionArnSecretName}",
+          SecretString: '{"ProjectVersionArn":""}',
         },
       },
     },
