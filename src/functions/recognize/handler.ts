@@ -1,14 +1,14 @@
-import { APIGatewayProxyEvent } from "aws-lambda";
-import "source-map-support/register";
-import { ZodError } from "zod";
+import { APIGatewayProxyEvent } from 'aws-lambda';
+import 'source-map-support/register';
+import { ZodError } from 'zod';
 
-import * as validate from "@application/validators/base64Image";
-import { recognizePokemon } from "@application/use_cases/recognizePokemon";
-import { PokemonUnrecognized } from "@application/errors/PokemonUnrecognized";
+import * as validate from '@application/validators/base64Image';
+import { recognizePokemon } from '@application/use_cases/recognizePokemon';
+import { PokemonUnrecognized } from '@application/errors/PokemonUnrecognized';
 
 export const recognize = async (event: APIGatewayProxyEvent) => {
   try {
-    const body = JSON.parse(event.body || "{}");
+    const body = JSON.parse(event.body || '{}');
     const { base64Image } = validate.base64Image(body);
 
     const pokemonName = await recognizePokemon(base64Image);
@@ -20,6 +20,7 @@ export const recognize = async (event: APIGatewayProxyEvent) => {
       }),
     };
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.log(err);
 
     if (err instanceof ZodError) {
@@ -27,7 +28,8 @@ export const recognize = async (event: APIGatewayProxyEvent) => {
         statusCode: 400,
         body: JSON.stringify(err.errors),
       };
-    } else if (err instanceof PokemonUnrecognized) {
+    }
+    if (err instanceof PokemonUnrecognized) {
       return {
         statusCode: 400,
         body: JSON.stringify({ message: err.message }),
@@ -37,7 +39,7 @@ export const recognize = async (event: APIGatewayProxyEvent) => {
     return {
       statusCode: 500,
       body: JSON.stringify({
-        message: "Ops! Something goes wrong, try again later.",
+        message: 'Ops! Something goes wrong, try again later.',
       }),
     };
   }

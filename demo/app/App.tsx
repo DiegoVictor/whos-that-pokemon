@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   Alert,
   Animated,
@@ -9,14 +9,67 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from "react-native";
-import { Camera, CameraCapturedPicture } from "expo-camera";
-import { useCallback } from "react";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import Constants from "expo-constants";
+} from 'react-native';
+import { Camera, CameraCapturedPicture } from 'expo-camera';
+import {
+  FontAwesome5,
+  Ionicons,
+  MaterialCommunityIcons,
+  AntDesign,
+} from '@expo/vector-icons';
+
+import Constants from 'expo-constants';
+
+const size = Dimensions.get('screen').width - 40;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#ecf1ff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },
+  frame: {
+    backgroundColor: '#000',
+    borderRadius: 8,
+    marginBottom: 15,
+    overflow: 'hidden',
+  },
+  camera: {
+    height: size,
+    width: size,
+  },
+  image: {
+    height: size,
+    width: size,
+  },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.07)',
+    borderRadius: 25,
+    justifyContent: 'center',
+    marginHorizontal: 7,
+    width: 50,
+    height: 50,
+  },
+  cancel: {
+    backgroundColor: 'rgba(235, 70, 70, 0.07)',
+  },
+  description: {
+    alignItems: 'center',
+    marginTop: 35,
+    width: '100%',
+  },
+  text: {
+    textAlign: 'center',
+    width: 180,
+  },
+});
 
 export default function App() {
   const [hasPermission, setHasPermission] = useState(false);
@@ -37,13 +90,13 @@ export default function App() {
 
   const spin = spinValue.interpolate({
     inputRange: [0, 1],
-    outputRange: ["0deg", "360deg"],
+    outputRange: ['0deg', '360deg'],
   });
 
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === "granted");
+      setHasPermission(status === 'granted');
     })();
   }, []);
 
@@ -83,17 +136,18 @@ export default function App() {
           name += extension;
         } else {
           setLoading(false);
-          Alert.alert("Could not identiify the photo format!");
+          Alert.alert('Could not identiify the photo format!');
 
           return;
         }
       }
 
       const url = Constants.manifest?.extra?.recognition_url;
+      // eslint-disable-next-line no-undef
       fetch(url, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           name,
@@ -102,33 +156,33 @@ export default function App() {
       })
         .then((response) => response.json())
         .then((json) => {
-          const { pokemon_name } = json;
-          if (pokemon_name) {
-            Alert.alert("Who's that pokemon?", `It's a ${pokemon_name}`, [
+          const { pokemonName } = json;
+          if (pokemonName) {
+            Alert.alert("Who's that pokemon?", `It's a ${pokemonName}`, [
               {
                 onPress: () => {
                   setPhoto(null);
                 },
-                style: "default",
+                style: 'default',
               },
             ]);
           } else {
             Alert.alert(
-              "Ops",
-              "We were not able to recognize a pokemon in the photo, be sure to take a good photo of him!",
+              'Ops',
+              'We were not able to recognize a pokemon in the photo, be sure to take a good photo of him!',
               [
                 {
                   onPress: () => {
                     setPhoto(null);
                   },
-                  style: "default",
+                  style: 'default',
                 },
               ]
             );
           }
         })
         .catch(() => {
-          Alert.alert("Ops! Something goes wrong, try again later!");
+          Alert.alert('Ops! Something goes wrong, try again later!');
         })
         .finally(() => {
           setLoading(false);
@@ -215,54 +269,3 @@ export default function App() {
     </View>
   );
 }
-
-const size = Dimensions.get("screen").width - 40;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#ecf1ff",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 20,
-  },
-  frame: {
-    backgroundColor: "#000",
-    borderRadius: 8,
-    marginBottom: 15,
-    overflow: "hidden",
-  },
-  camera: {
-    height: size,
-    width: size,
-  },
-  image: {
-    height: size,
-    width: size,
-  },
-  buttons: {
-    flexDirection: "row",
-    justifyContent: "center",
-    width: "100%",
-  },
-  button: {
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.07)",
-    borderRadius: 25,
-    justifyContent: "center",
-    marginHorizontal: 7,
-    width: 50,
-    height: 50,
-  },
-  cancel: {
-    backgroundColor: "rgba(235, 70, 70, 0.07)",
-  },
-  description: {
-    alignItems: "center",
-    marginTop: 35,
-    width: "100%",
-  },
-  text: {
-    textAlign: "center",
-    width: 180,
-  },
-});

@@ -1,4 +1,4 @@
-import { SecretsManager } from "@aws-sdk/client-secrets-manager";
+import { SecretsManager } from '@aws-sdk/client-secrets-manager';
 
 const secretManager = new SecretsManager({});
 

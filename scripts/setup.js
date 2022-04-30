@@ -1,13 +1,14 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const {
   Rekognition,
   DatasetType,
   DatasetStatus,
-} = require("@aws-sdk/client-rekognition");
-const { S3 } = require("@aws-sdk/client-s3");
-const axios = require("axios");
-const { Upload } = require("@aws-sdk/lib-storage");
-const { PassThrough } = require("stream");
-const sharp = require("sharp");
+} = require('@aws-sdk/client-rekognition');
+const { S3 } = require('@aws-sdk/client-s3');
+const axios = require('axios');
+const { Upload } = require('@aws-sdk/lib-storage');
+const { PassThrough } = require('stream');
+const sharp = require('sharp');
 const {
   projectName,
   projectVersionName,
@@ -15,7 +16,7 @@ const {
   trainFolder,
   bucket: Bucket,
   lastPokemonId,
-} = require("../variables.json");
+} = require('../variables.json');
 
 const rekognition = new Rekognition({});
 const s3 = new S3({});
@@ -38,8 +39,10 @@ const getProject = async (name) =>
 /**
  *
  * @param {string} ProjectArn
+ * @param {DatasetType} DatasetType
  * @returns {Promise<string>} DatasetArn
  */
+// eslint-disable-next-line no-shadow
 const createDataset = async (ProjectArn, DatasetType) =>
   rekognition
     .createDataset({
@@ -84,7 +87,7 @@ const getPokemonById = async (id) =>
     }) => ({
       id,
       name,
-      OfficialArtwork: other["official-artwork"].front_default,
+      OfficialArtwork: other['official-artwork'].front_default,
       DreamWorld: other.dream_world.front_default,
     })
   );
@@ -95,7 +98,7 @@ const getPokemonById = async (id) =>
  * @return {Promise<NodeJS.ReadableStream>}
  */
 const getImageStream = async (url) =>
-  axios.get(url, { responseType: "stream" }).then((response) => response.data);
+  axios.get(url, { responseType: 'stream' }).then((response) => response.data);
 
 /**
  *
@@ -130,7 +133,7 @@ const storageRawAndGreyedOutImageVersion = async (stream, name) => {
   return Promise.all(
     uploaders.map(async (pass, hidden) => {
       const fileName = `${imagesFolder}/${name}${
-        !!hidden ? "GreyedOut" : ""
+        hidden ? 'GreyedOut' : ''
       }.png`;
       return uploadFile(fileName, pass).then(() => fileName);
     })
@@ -148,7 +151,7 @@ const storageRawAndGreyedOutImageVersion = async (stream, name) => {
  */
 const getAndStorePokemonImages = async (pokemon) =>
   Promise.all(
-    ["OfficialArtwork", "DreamWorld"].map((spriteType) =>
+    ['OfficialArtwork', 'DreamWorld'].map((spriteType) =>
       getImageStream(pokemon[spriteType]).then((stream) =>
         storageRawAndGreyedOutImageVersion(
           stream,
@@ -179,6 +182,7 @@ const uploadPokemons = async (entries = []) => {
   entries.push({ name, paths });
 
   if (id < lastPokemonId) {
+    // eslint-disable-next-line no-plusplus
     CURRENT_POKEMON_ID++;
     return uploadPokemons(entries);
   }
@@ -195,7 +199,7 @@ const setDatasetEntries = async (DatasetArn, data) =>
   rekognition.updateDatasetEntries({
     DatasetArn,
     Changes: {
-      GroundTruth: Buffer.from(data.join("\n").toString("base64")),
+      GroundTruth: Buffer.from(data.join('\n').toString('base64')),
     },
   });
 
@@ -211,14 +215,14 @@ const prepare = (entries, type) => {
     .map(({ name, paths }) =>
       paths.map((path) =>
         JSON.stringify({
-          "source-ref": `s3://${Bucket}/${path}`,
+          'source-ref': `s3://${Bucket}/${path}`,
           [name]: 1,
           [`${name}-metadata`]: {
             confidence: 1,
-            "class-name": name,
-            "human-annotated": "yes",
-            "creation-date": new Date(),
-            type: "groundtruth/image-classification",
+            'class-name': name,
+            'human-annotated': 'yes',
+            'creation-date': new Date(),
+            type: 'groundtruth/image-classification',
           },
         })
       )
@@ -252,7 +256,7 @@ const getDatasetStatus = async (DatasetArn) =>
  * @returns {Promise<void>}
  */
 const waitDatasetUpdate = async (DatasetArn) => {
-  process.stdout.write("Checking datasets update progress...\n");
+  process.stdout.write('Checking datasets update progress...\n');
   const createWaiter = (resolve) =>
     setTimeout(
       () =>
@@ -260,7 +264,7 @@ const waitDatasetUpdate = async (DatasetArn) => {
           if (Status === DatasetStatus.UPDATE_COMPLETE) {
             return resolve(true);
           }
-          createWaiter(resolve);
+          return createWaiter(resolve);
         }),
       3000
     );
@@ -308,7 +312,7 @@ const trainModel = async (ProjectArn) => {
       process.stdout.write(`ProjectVersionArn: ${ProjectVersionArn}\n`)
     );
   process.stdout.write(
-    "The training has started, checkout the progress in AWS Console\n"
+    'The training has started, checkout the progress in AWS Console\n'
   );
 };
 

@@ -20,16 +20,16 @@ export default {
   collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  collectCoverageFrom: ["src/**/*.ts"],
+  collectCoverageFrom: ['src/**/*.ts'],
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: "tests/coverage",
+  coverageDirectory: 'tests/coverage',
 
   // An array of regexp pattern strings used to skip coverage collection
-  coveragePathIgnorePatterns: ["application/validators", "infra", "index.ts"],
+  coveragePathIgnorePatterns: ['application/validators', 'infra', 'index.ts'],
 
   // Indicates which provider should be used to instrument code for coverage
-  coverageProvider: "v8",
+  coverageProvider: 'v8',
 
   // A list of reporter names that Jest uses when writing coverage reports
   coverageReporters: ["text", "lcov"],
@@ -82,10 +82,10 @@ export default {
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
-    "@application/(.*)": ["<rootDir>/src/application/$1"],
-    "@functions/(.*)": ["<rootDir>/src/functions/$1"],
-    "@infra/(.*)": ["<rootDir>/src/infra/$1"],
-    "@utils/(.*)": ["<rootDir>/src/utils/$1"],
+    '@application/(.*)': ['<rootDir>/src/application/$1'],
+    '@functions/(.*)': ['<rootDir>/src/functions/$1'],
+    '@infra/(.*)': ['<rootDir>/src/infra/$1'],
+    '@utils/(.*)': ['<rootDir>/src/utils/$1'],
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -98,7 +98,7 @@ export default {
   // notifyMode: "failure-change",
 
   // A preset that is used as a base for Jest's configuration
-  preset: "ts-jest",
+  preset: 'ts-jest',
 
   // Run tests from one or more projects
   // projects: undefined,

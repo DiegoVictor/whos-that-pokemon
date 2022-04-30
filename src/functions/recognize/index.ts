@@ -1,18 +1,18 @@
-import { handlerPath } from "@utils/handlerResolver";
+import { handlerPath } from '@utils/handlerResolver';
 
 export default {
   handler: `${handlerPath(__dirname)}/handler.recognize`,
   environment: {
-    BUCKET_NAME: "${self:custom.bucketName}",
+    BUCKET_NAME: '${self:custom.bucketName}',
     PROJECT_VERSION_ARN_SECRET_NAME:
-      "${self:custom.projectVersionArnSecretName}",
+      '${self:custom.projectVersionArnSecretName}',
   },
-  name: "WhosThatPokemonRecognize",
+  name: 'WhosThatPokemonRecognize',
   events: [
     {
       http: {
-        method: "post",
-        path: "recognize",
+        method: 'post',
+        path: 'recognize',
       },
     },
   ],

@@ -1,6 +1,6 @@
-import { Rekognition } from "@aws-sdk/client-rekognition";
+import { Rekognition } from '@aws-sdk/client-rekognition';
 
-import * as secretManagerService from "@infra/services/secretManager";
+import * as secretManagerService from '@infra/services/secretManager';
 
 const rekognition = new Rekognition({});
 

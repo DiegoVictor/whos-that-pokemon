@@ -1,10 +1,10 @@
-const { Rekognition } = require("@aws-sdk/client-rekognition");
-const { S3 } = require("@aws-sdk/client-s3");
+const { Rekognition } = require('@aws-sdk/client-rekognition');
+const { S3 } = require('@aws-sdk/client-s3');
 const {
   projectName,
   projectVersionName,
   bucket: Bucket,
-} = require("../variables.json");
+} = require('../variables.json');
 
 const rekognition = new Rekognition({});
 const s3 = new S3({});
@@ -42,7 +42,7 @@ const deleteDataset = async (DatasetArn) =>
  */
 const deleteDatasets = async (datasets) =>
   Promise.all(datasets.map(({ DatasetArn }) => deleteDataset(DatasetArn))).then(
-    () => process.stdout.write("Datasets removed\n")
+    () => process.stdout.write('Datasets removed\n')
   );
 
 /**
@@ -74,9 +74,9 @@ const deleteProjectVersion = async (ProjectArn) =>
       })
     )
     .then(() => {
-      process.stdout.write("Model removed\n");
+      process.stdout.write('Model removed\n');
       process.stdout.write(
-        "The model is being deleted, checkout the progress in AWS Console\n"
+        'The model is being deleted, checkout the progress in AWS Console\n'
       );
     });
 
@@ -97,7 +97,7 @@ const cleanOutBucket = async () =>
         },
       })
     )
-    .then(() => process.stdout.write("Bucket emptied\n"));
+    .then(() => process.stdout.write('Bucket emptied\n'));
 
 getProject(projectName)
   .then(({ ProjectArn, Datasets }) =>
