@@ -14,6 +14,8 @@
 
 I always wished to have a pokedex and today my dream comes true!
 
+![Infrastructure Diagram](https://raw.githubusercontent.com/DiegoVictor/whos-that-pokemon/main/Who's%20That%20Pokemon.drawio.png)
+
 ## Table of Contents
 * [Requirements](#requirements)
 * [Install](#install)
