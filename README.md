@@ -1,4 +1,5 @@
 # Who's that pokemon?
+![CircleCI](https://img.shields.io/circleci/build/github/DiegoVictor/whos-that-pokemon?style=flat-square&logo=circleci)
 [![serverless](https://img.shields.io/badge/serverless-3.15.2-FD5750?style=flat-square&logo=serverless)](https://www.serverless.com/)
 [![eslint](https://img.shields.io/badge/eslint-8.14.0-4b32c3?style=flat-square&logo=eslint)](https://eslint.org/)
 [![airbnb-style](https://flat.badgen.net/badge/style-guide/airbnb/ff5a5f?icon=airbnb)](https://github.com/airbnb/javascript)
