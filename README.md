@@ -10,6 +10,8 @@
 [![coverage](https://img.shields.io/codecov/c/gh/DiegoVictor/whos-that-pokemon?logo=codecov&style=flat-square)](https://codecov.io/gh/DiegoVictor/whos-that-pokemon)
 [![MIT License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://raw.githubusercontent.com/DiegoVictor/whos-that-pokemon/main/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)<br>
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Who's%20That%20Pokemon&uri=https%3A%2F%2Fraw.githubusercontent.com%2FDiegoVictor%2Fwhos-that-pokemon%2Fmain%2FInsomnia_2022-04-28.json)
+
 I always wished to have a pokedex and today my dream comes true!
 
 ## Table of Contents
