@@ -4,5 +4,5 @@
   "imagesFolder": "rekognition/images",
   "trainFolder": "rekognition/train",
   "bucket": "whos-that-pokemon-bucket",
-  "lastPokemonId": 2
+  "lastPokemonId": 151
 }
