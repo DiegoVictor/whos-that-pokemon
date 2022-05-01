@@ -21,9 +21,8 @@ I always wished to have a pokedex and today my dream comes true!
 * [Install](#install)
   * [Configure](#configure)
     * [Script](#script)
-    * [S3 Bucket](#s3-bucket)
     * [Rekognition](#rekognition)
-    * [env](#env)
+    * [Teardown](#teardown)
 * [Usage](#usage)
   * [Endpoint](#endpoint)
   * [Demo](#demo)
@@ -33,9 +32,9 @@ I always wished to have a pokedex and today my dream comes true!
       * [Using](#using)
 
 # Requirements
-* Node.js ^14.15.0
+* Node.js ^16.6.1
 * Serveless Framework
-* AWS Account 
+* AWS Account
   * [S3](https://aws.amazon.com/s3/)
   * [Rekognition](https://aws.amazon.com/rekognition/)
   * [Lambda](https://aws.amazon.com/lambda)
@@ -49,40 +48,51 @@ Or simple:
 ```
 yarn
 ```
+> Was installed and configured the [`eslint`](https://eslint.org/) and [`prettier`](https://prettier.io/) to keep the code clean and patterned.
 
 ## Configure
-To get the project running follow the next sections instructions.
+First review the `variables.json` file and change it if necesary.
 
-### Script
-This repo comes together with a script (in Node) to download pokemons' images (2 versions of each pokemon) from [Pokemon API](https://pokeapi.co/) and from them create a blackened version of each of this images. The script can be executed as following:
-```
-$ node scripts/download-pokemons-images.js
-```
-> The script is configured to download only the firsts 151th pokemons
-
-The images will be downloaded in the `scripts/images` folder, upload theses images to train your model (see the next sections).
-
-### S3 Bucket
-To create a S3's bucket just see [Step 1: Create your first S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html) help page. This bucket is utilized to upload photos taken by the app before sent to analysis.
-> Write down the bucket's name it will be necessary when configuring the [environment variables](#env)
-
-### Rekognition
-First create a project as described in the [Creating an Amazon Rekognition Custom Labels project](https://docs.aws.amazon.com/rekognition/latest/customlabels-dg/cp-create-project.html) document.
-
-Then you need to create and prepare a dataset with the pokemons' images (look to a [script](#script) attached to this repo that downloads these images for you), to achieve this read the [Creating an Amazon Rekognition Custom Labels dataset](https://docs.aws.amazon.com/rekognition/latest/customlabels-dg/cd-create-dataset.html) article.
-
-Now, [train your model](https://docs.aws.amazon.com/rekognition/latest/customlabels-dg/tm-console.html).
-
-After the training finish [start your model](https://docs.aws.amazon.com/rekognition/latest/customlabels-dg/start-running-model.html). When the model be started look for the model's ARN in the `Use your model` tab!
-> Pay attention to the limits of the free tier, remember to always [stop the model](https://docs.aws.amazon.com/rekognition/latest/customlabels-dg/stop-running-model.html) after the tests!
-> Write down the model's ARN it will be necessary when configuring the [environment variables](#env).
-
-### env
-In this file you may configure your bucket name and Rekognition model's ARN. Rename the `.env.example` in the root directory to `.env` then just update with your settings.
 |key|description
 |---|---
-BUCKET_NAME|Name of the [S3's](#s3-bucket) bucket where the photos will be uploaded before sent to [Amazon Rekognition](https://aws.amazon.com/rekognition/).
-REKOGNITION_MODEL_ARN|The ARN of the [Amazon Rekognition](#rekognition) model.
+ProjectName|Project's name that will be created during the deploy.
+ProjectVersionName|Project version's name that will be created by the [setup script](#script).
+Bucket|Bucket's name used for store pokemons' images,training results and pictures sent to be recognized.
+
+Then, deploy the API:
+```
+$ sls deploy
+```
+
+### Script
+Now you need to run the setup script (`scripts/setup.js`):
+```
+$ node scripts/setup.js
+```
+
+The script will:
+
+1. Upload pokemons images into a S3 Bucket.
+2. Create datasets for the project created during the deploy.
+3. Add the images uploaded to S3 Bucket into the datasets.
+4. Start a model training and configure the project version ARN in the secret created during the deploy.
+> This script is configured to load only the first 151st pokemons.
+
+### Rekognition
+After the training finishes, [start your model](https://docs.aws.amazon.com/rekognition/latest/customlabels-dg/start-running-model.html).
+> Pay attention to the limits of the free tier, remember to always [stop your model](https://docs.aws.amazon.com/rekognition/latest/customlabels-dg/stop-running-model.html)!
+
+### Teardown
+To completly remove the resources follow these steps:
+1. Run the teardown script:
+```
+$ node scripts/teardown.js
+```
+2. Then remove the stack:
+```
+$ sls remove
+```
+That is all.
 
 # Usage
 First of all start up the server:
@@ -133,3 +143,18 @@ As you can imagine the app will just send the photo in base64 to the server reco
 After install and configure the app, open it and take a picture of the greyed out pokemon in the [web page](#web), press the button at right to send the photo to analysis, then after some seconds the app will tell you what pokemon is that! (if one was identified)
 
 <img src="https://github.com/DiegoVictor/whos-that-pokemon/raw/main/screenshots/app.gif" width="400px">
+
+
+# Running the tests
+[Jest](https://jestjs.io/) was the choice to test the app, to run:
+```
+$ yarn test
+```
+Or:
+```
+$ npm run test
+```
+> Run the command in the root folder
+
+## Coverage report
+You can see the coverage report inside `tests/coverage`. They are automatically created after the tests run.
