@@ -5,6 +5,7 @@ const {
   DatasetStatus,
 } = require('@aws-sdk/client-rekognition');
 const { S3 } = require('@aws-sdk/client-s3');
+const { SecretsManager } = require('@aws-sdk/client-secrets-manager');
 const axios = require('axios');
 const { Upload } = require('@aws-sdk/lib-storage');
 const { PassThrough } = require('stream');
@@ -18,8 +19,9 @@ const {
 
 const rekognition = new Rekognition({});
 const s3 = new S3({});
+const secretManager = new SecretsManager({});
 
-let CURRENT_POKEMON_ID = 1;
+const LIMIT = 151;
 
 /**
  * @typedef { DatasetArn: string } Dataset
@@ -292,7 +294,7 @@ const updateDatasetEntries = async (entries, datasets) =>
  */
 const trainModel = async (ProjectArn) => {
   process.stdout.write(`Start model training at ${new Date()}\n`);
-  await rekognition
+  return rekognition
     .createProjectVersion({
       ProjectArn,
       VersionName: ProjectVersionName,
@@ -300,20 +302,32 @@ const trainModel = async (ProjectArn) => {
         S3Bucket: Bucket,
       },
     })
-    .then(({ ProjectVersionArn }) =>
-      process.stdout.write(`ProjectVersionArn: ${ProjectVersionArn}\n`)
-    );
-  process.stdout.write(
-    'The training has started, checkout the progress in AWS Console\n'
-  );
+    .then(({ ProjectVersionArn }) => {
+      process.stdout.write(
+        'The training has started, checkout the progress in AWS Console\n'
+      );
+
+      return ProjectVersionArn;
+    });
 };
+
+/**
+ *
+ * @param {string} ProjectVersionArn
+ * @returns {Promise<void>}
+ */
+const updateSecret = async (ProjectVersionArn) =>
+  secretManager.updateSecret({
+    SecretId: ProjectVersionArnSecretName,
+    SecretString: JSON.stringify({ ProjectVersionArn }),
+  });
 
 uploadPokemons().then((entries) =>
   getProject(ProjectName).then(async (ProjectArn) => {
     const datasets = await createDatasets(ProjectArn);
 
     return updateDatasetEntries(entries, datasets).then(() =>
-      trainModel(ProjectArn)
+      trainModel(ProjectArn).then(updateSecret)
     );
   })
 );
