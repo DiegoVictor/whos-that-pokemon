@@ -10,12 +10,10 @@ const { Upload } = require('@aws-sdk/lib-storage');
 const { PassThrough } = require('stream');
 const sharp = require('sharp');
 const {
-  projectName,
-  projectVersionName,
-  imagesFolder,
-  trainFolder,
-  bucket: Bucket,
-  lastPokemonId,
+  ProjectName,
+  ProjectVersionName,
+  Bucket,
+  ProjectVersionArnSecretName,
 } = require('../variables.json');
 
 const rekognition = new Rekognition({});
@@ -132,9 +130,7 @@ const storageRawAndGreyedOutImageVersion = async (stream, name) => {
 
   return Promise.all(
     uploaders.map(async (pass, hidden) => {
-      const fileName = `${imagesFolder}/${name}${
-        hidden ? 'GreyedOut' : ''
-      }.png`;
+      const fileName = `pokemons/${name}${hidden ? 'GreyedOut' : ''}.png`;
       return uploadFile(fileName, pass).then(() => fileName);
     })
   ).then((results) => results.flat());
@@ -174,17 +170,14 @@ const uploadPokemonById = async (id) =>
  * @param {string[]} entries
  * @returns {Promise<Entry[]>}
  */
-const uploadPokemons = async (entries = []) => {
-  const id = CURRENT_POKEMON_ID;
+const uploadPokemons = async (entries = [], id = 1) => {
   const { name, paths } = await uploadPokemonById(id);
 
   process.stdout.write(`#${name} uploaded\n`);
   entries.push({ name, paths });
 
-  if (id < lastPokemonId) {
-    // eslint-disable-next-line no-plusplus
-    CURRENT_POKEMON_ID++;
-    return uploadPokemons(entries);
+  if (id < LIMIT) {
+    return uploadPokemons(entries, id + 1);
   }
   return entries;
 };
@@ -302,10 +295,9 @@ const trainModel = async (ProjectArn) => {
   await rekognition
     .createProjectVersion({
       ProjectArn,
-      VersionName: projectVersionName,
+      VersionName: ProjectVersionName,
       OutputConfig: {
         S3Bucket: Bucket,
-        S3KeyPrefix: trainFolder,
       },
     })
     .then(({ ProjectVersionArn }) =>
@@ -317,7 +309,7 @@ const trainModel = async (ProjectArn) => {
 };
 
 uploadPokemons().then((entries) =>
-  getProject(projectName).then(async (ProjectArn) => {
+  getProject(ProjectName).then(async (ProjectArn) => {
     const datasets = await createDatasets(ProjectArn);
 
     return updateDatasetEntries(entries, datasets).then(() =>

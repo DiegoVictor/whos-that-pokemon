@@ -1,9 +1,9 @@
 const { Rekognition } = require('@aws-sdk/client-rekognition');
 const { S3 } = require('@aws-sdk/client-s3');
 const {
-  projectName,
-  projectVersionName,
-  bucket: Bucket,
+  ProjectName,
+  ProjectVersionName,
+  Bucket,
 } = require('../variables.json');
 
 const rekognition = new Rekognition({});
@@ -54,7 +54,7 @@ const getProjectVersionArn = async (ProjectArn) =>
   rekognition
     .describeProjectVersions({
       ProjectArn,
-      VersionNames: [projectVersionName],
+      VersionNames: [ProjectVersionName],
     })
     .then(
       ({ ProjectVersionDescriptions: [{ ProjectVersionArn }] }) =>
@@ -99,7 +99,7 @@ const cleanOutBucket = async () =>
     )
     .then(() => process.stdout.write('Bucket emptied\n'));
 
-getProject(projectName)
+getProject(ProjectName)
   .then(({ ProjectArn, Datasets }) =>
     deleteDatasets(Datasets).then(() => deleteProjectVersion(ProjectArn))
   )

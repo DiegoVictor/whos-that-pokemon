@@ -1,8 +1,6 @@
 {
-  "projectName": "WhosThatPokemonProject",
-  "projectVersionName": "WhosThatPokemonProjectVersion",
-  "imagesFolder": "rekognition/images",
-  "trainFolder": "rekognition/train",
-  "bucket": "whos-that-pokemon-bucket",
-  "lastPokemonId": 151
+  "ProjectName": "WhosThatPokemonProject",
+  "ProjectVersionName": "WhosThatPokemonProjectVersion",
+  "ProjectVersionArnSecretName": "projectVersionArn",
+  "Bucket": "whos-that-pokemon-bucket"
 }
