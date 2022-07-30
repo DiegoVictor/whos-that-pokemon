@@ -1,8 +1,8 @@
 import { APIGatewayProxyEvent } from 'aws-lambda';
 import faker from '@faker-js/faker';
+import { ZodError, ZodIssueCode, ZodParsedType } from 'zod';
 
 import { recognize } from '@functions/recognize/handler';
-import { ZodError, ZodIssueCode, ZodParsedType } from 'zod';
 import { PokemonUnrecognized } from '@application/errors/PokemonUnrecognized';
 
 const mockBase64Image = jest.fn();
