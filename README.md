@@ -30,6 +30,8 @@ I always wished to have a pokedex and today my dream comes true!
     * [App](#app)
       * [Configure](#configure-1)
       * [Using](#using)
+* [Running the tests](#running-the-tests)
+  * [Coverage report](#coverage-report)
 
 # Requirements
 * Node.js ^16.6.1
