@@ -1,4 +1,4 @@
-import faker from '@faker-js/faker';
+import {faker} from '@faker-js/faker';
 
 import { recognizePokemon } from '@application/use_cases/recognizePokemon';
 import { PokemonUnrecognized } from '@application/errors/PokemonUnrecognized';
@@ -21,7 +21,7 @@ jest.mock('@infra/services/recognition', () => {
 
 describe('recognizePokemon', () => {
   it('should be able to recognize a pokemon', async () => {
-    const data = faker.random.alphaNumeric(50);
+    const data = faker.string.alphanumeric(50);
     const base64Image = `data:image/png;base64,${data}`;
     const pokemonName = faker.lorem.word();
 
@@ -41,7 +41,7 @@ describe('recognizePokemon', () => {
   });
 
   it('should not be able to recognize a pokemon', async () => {
-    const data = faker.random.alphaNumeric(50);
+    const data = faker.string.alphanumeric(50);
     const base64Image = `data:image/png;base64,${data}`;
 
     mockRecognize.mockResolvedValueOnce({
