@@ -46,7 +46,7 @@ I always wished to have a pokedex and today my dream comes true!
 ```
 npm install
 ```
-Or simple:
+Or simply:
 ```
 yarn
 ```
@@ -145,7 +145,6 @@ As you can imagine the app will just send the photo in base64 to the server reco
 After install and configure the app, open it and take a picture of the greyed out pokemon in the [web page](#web), press the button at right to send the photo to analysis, then after some seconds the app will tell you what pokemon is that! (if one was identified)
 
 <img src="https://github.com/DiegoVictor/whos-that-pokemon/raw/main/screenshots/app.gif" width="400px">
-
 
 # Running the tests
 [Jest](https://jestjs.io/) was the choice to test the app, to run:
