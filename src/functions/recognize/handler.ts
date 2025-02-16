@@ -29,6 +29,7 @@ export const recognize = async (event: APIGatewayProxyEvent) => {
         body: JSON.stringify(err.errors),
       };
     }
+
     if (err instanceof PokemonUnrecognized) {
       return {
         statusCode: 400,
@@ -39,7 +40,7 @@ export const recognize = async (event: APIGatewayProxyEvent) => {
     return {
       statusCode: 500,
       body: JSON.stringify({
-        message: 'Ops! Something goes wrong, try again later.',
+        message: 'Oops! Something goes wrong, try again later.',
       }),
     };
   }
