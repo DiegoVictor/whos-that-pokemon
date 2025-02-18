@@ -114,7 +114,7 @@ describe('recognize', () => {
     expect(response).toStrictEqual({
       statusCode: 500,
       body: JSON.stringify({
-        message: 'Ops! Something goes wrong, try again later.',
+        message: 'Oops! Something goes wrong, try again later.',
       }),
     });
     expect(mockBase64Image).toHaveBeenCalledWith({ base64Image });
