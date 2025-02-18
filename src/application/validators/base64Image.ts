@@ -6,7 +6,7 @@ const schema = z
       .string()
       .regex(
         /^data:image\/(png|jpg|jpeg);base64,[a-zA-Z0-9+/]+$/,
-        'Must be a base64 image'
+        'Must be a base64 image',
       ),
   })
   .required();

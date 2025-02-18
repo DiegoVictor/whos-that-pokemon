@@ -15,7 +15,7 @@ const getKeyAndData = (base64Image: string) => {
 };
 
 export const recognizePokemon = async (
-  base64Image: string
+  base64Image: string,
 ): Promise<string> => {
   const { key, data } = getKeyAndData(base64Image);
 

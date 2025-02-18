@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent } from 'aws-lambda';
-import {faker} from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 import { ZodError, ZodIssueCode, ZodParsedType } from 'zod';
 
 import { recognize } from '@functions/recognize/handler';
@@ -18,7 +18,7 @@ jest.mock('@application/use_cases/recognizePokemon', () => ({
 describe('recognize', () => {
   it('should be able to recognize a pokemon', async () => {
     const base64Image = `data:image/png;base64,${faker.string.alphanumeric(
-      50
+      50,
     )}`;
     const pokemonName = faker.lorem.word();
 
@@ -68,7 +68,7 @@ describe('recognize', () => {
 
   it('should be able to return a pokemon unrecognized error', async () => {
     const base64Image = `data:image/png;base64,${faker.string.alphanumeric(
-      50
+      50,
     )}`;
     const error = new PokemonUnrecognized();
 
@@ -97,7 +97,7 @@ describe('recognize', () => {
 
   it('should be able to return internal errors', async () => {
     const base64Image = `data:image/png;base64,${faker.string.alphanumeric(
-      50
+      50,
     )}`;
     const error = new Error('Test Error');
 
