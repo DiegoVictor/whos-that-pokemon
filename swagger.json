@@ -1,0 +1,143 @@
+{
+    "openapi":"3.0.3",
+    "info": {
+      "title":"Who's that Pokemon?",
+      "version":"1.0",
+      "license": {
+        "name": "MIT",
+        "url": "https://raw.githubusercontent.com/DiegoVictor/whos-that-pokemon/refs/heads/main/LICENSE"
+      }
+    },
+    "servers": [
+      {
+        "url":"http://localhost:3000/dev"
+      }
+    ],
+    "paths": {
+      "/recognize": {
+        "post": {
+          "tags": ["Recognization"],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "base64Image": {
+                      "type": "string",
+                      "format": "base64"
+                    }
+                  },
+                  "required": ["base64Image"]
+                },
+                "example": {
+                  "base64Image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABjElEQVR42mNkAAYyYjF69e/fv3z9/9fX1/8+fPn"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Returns Pokemon's Name",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "pokemonName": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": {
+                    "pokemonName": "pikachu"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "code": {
+                              "type": "string"
+                            },
+                            "options": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "expected": {
+                              "type": "string"
+                            },
+                            "received": {},
+                            "message": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "examples": {
+                    "Validation Failed": {
+                      "value": [
+                        {
+                          "code": "invalid_type",
+                          "expected": "string",
+                          "received": "undefined",
+                          "path": [
+                            "base64Image"
+                          ],
+                          "message": "Required"
+                        }
+                      ]
+                    },
+                    "Unrecognized Pokemon": {
+                      "value": {
+                        "message": "We couldn't recognize a pokemon in the given picture"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": {
+                    "message": "Oops! Something goes wrong, try again later."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
