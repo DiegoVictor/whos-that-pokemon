@@ -10,10 +10,10 @@ jobs:
     steps:
       - checkout
       - node/install-packages:
-          cache-path: ~/whos-that-pokemon/node_modules
+          cache-path: ~/project/node_modules
       - run: npm run test
       - codecov/upload
 workflows:
-    test:
+    main:
       jobs:
         - test
