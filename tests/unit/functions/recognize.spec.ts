@@ -1,6 +1,7 @@
 import { APIGatewayProxyEvent } from 'aws-lambda';
 import { faker } from '@faker-js/faker';
-import { ZodError, ZodIssueCode, ZodParsedType } from 'zod';
+import { ZodError } from 'zod';
+import { $ZodIssue } from 'zod/v4/core/errors.cjs';
 
 import { recognize } from '@functions/recognize/handler';
 import { PokemonUnrecognized } from '@application/errors/PokemonUnrecognized';
@@ -40,11 +41,10 @@ describe('recognize', () => {
   });
 
   it('should be able to return validation errors', async () => {
-    const error = {
+    const error: $ZodIssue = {
       message: 'fake error message',
-      code: ZodIssueCode.invalid_type,
-      expected: ZodParsedType.integer,
-      received: ZodParsedType.boolean,
+      code: 'invalid_type',
+      expected: 'int',
       path: [''],
     };
     const zodError = new ZodError([error]);
