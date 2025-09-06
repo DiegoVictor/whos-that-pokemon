@@ -26,7 +26,7 @@ export const recognize = async (event: APIGatewayProxyEvent) => {
     if (err instanceof ZodError) {
       return {
         statusCode: 400,
-        body: JSON.stringify(err.errors),
+        body: JSON.stringify(err.issues),
       };
     }
 
