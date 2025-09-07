@@ -1,4 +1,4 @@
-import {faker} from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 import { recognizePokemon } from '@application/use_cases/recognizePokemon';
 import { PokemonUnrecognized } from '@application/errors/PokemonUnrecognized';
@@ -33,7 +33,7 @@ describe('recognizePokemon', () => {
 
     expect(mockUpload).toHaveBeenCalledWith(
       expect.any(String),
-      Buffer.from(data, 'base64')
+      Buffer.from(data, 'base64'),
     );
     expect(mockRecognize).toHaveBeenCalledWith(expect.any(String));
     expect(mockDeleteByKey).toHaveBeenCalledWith(expect.any(String));
@@ -48,13 +48,13 @@ describe('recognizePokemon', () => {
       CustomLabels: [],
     });
 
-    await expect(async () =>
-      recognizePokemon(base64Image)
-    ).rejects.toThrowError(PokemonUnrecognized);
+    await expect(async () => recognizePokemon(base64Image)).rejects.toThrow(
+      PokemonUnrecognized,
+    );
 
     expect(mockUpload).toHaveBeenCalledWith(
       expect.any(String),
-      Buffer.from(data, 'base64')
+      Buffer.from(data, 'base64'),
     );
     expect(mockRecognize).toHaveBeenCalledWith(expect.any(String));
     expect(mockDeleteByKey).toHaveBeenCalledWith(expect.any(String));
