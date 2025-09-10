@@ -85,7 +85,7 @@ export default function App() {
       duration: 1500,
       easing: Easing.linear,
       useNativeDriver: true,
-    })
+    }),
   ).start();
 
   const spin = spinValue.interpolate({
@@ -177,7 +177,7 @@ export default function App() {
                   },
                   style: 'default',
                 },
-              ]
+              ],
             );
           }
         })
