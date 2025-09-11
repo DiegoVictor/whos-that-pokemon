@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import {
   Alert,
   Animated,
+  Button,
   Dimensions,
   Easing,
   Image,
@@ -10,7 +11,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Camera, CameraCapturedPicture } from 'expo-camera';
+import {
+  CameraCapturedPicture,
+  CameraView,
+  useCameraPermissions,
+} from 'expo-camera';
 import {
   FontAwesome5,
   Ionicons,
@@ -72,8 +77,8 @@ const styles = StyleSheet.create({
 });
 
 export default function App() {
-  const [hasPermission, setHasPermission] = useState(false);
-  const [camera, setCamera] = useState<Camera | null>(null);
+  const [permission, requestPermission] = useCameraPermissions();
+  const ref = useRef<CameraView>(null);
   const [photo, setPhoto] = useState<CameraCapturedPicture | null>();
   const [loading, setLoading] = useState(false);
 
@@ -93,18 +98,11 @@ export default function App() {
     outputRange: ['0deg', '360deg'],
   });
 
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
-  }, []);
-
   const capture = useCallback(async () => {
-    if (camera && !loading) {
+    if (ref.current && !loading) {
       setLoading(true);
 
-      await camera
+      await ref.current
         .takePictureAsync({
           quality: 1,
           base64: true,
@@ -114,7 +112,7 @@ export default function App() {
           setLoading(false);
         });
     }
-  }, [camera, loading]);
+  }, [ref, loading]);
 
   const cancel = useCallback(() => {
     setPhoto(null);
@@ -196,7 +194,7 @@ export default function App() {
     </Animated.View>
   );
 
-  if (!hasPermission) {
+  if (!permission?.granted) {
     return (
       <View style={styles.container}>
         <MaterialCommunityIcons
@@ -205,6 +203,7 @@ export default function App() {
           color="rgba(0, 0, 0, 0.7)"
         />
         <Text>No access to camera!</Text>
+        <Button onPress={requestPermission} title="Grant permission" />
       </View>
     );
   }
@@ -215,13 +214,11 @@ export default function App() {
         {photo ? (
           <Image source={{ uri: photo.uri }} style={styles.image} />
         ) : (
-          <Camera
+          <CameraView
             style={styles.camera}
-            type={Camera.Constants.Type.back}
             ratio="1:1"
-            ref={async (r) => {
-              setCamera(r);
-            }}
+            facing="back"
+            ref={ref}
           />
         )}
       </View>
