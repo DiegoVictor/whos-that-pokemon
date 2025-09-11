@@ -190,7 +190,7 @@ export default function App() {
 
   const Loading = () => (
     <Animated.View style={{ transform: [{ rotate: spin }] }}>
-      <AntDesign name="loading1" size={24} color="black" />
+      <AntDesign name="loading" size={24} color="black" />
     </Animated.View>
   );
 
